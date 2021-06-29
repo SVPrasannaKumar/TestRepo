@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Consignment</title>
+<style>
+    body
+    {
+        background-color:#CEF6CE; 
+    }
+    h1
+    {
+        color:#08088A;
+        font-family:verdana;
+        text-align:center;`
+    }
+    #costtable
+    {
+        float:right;
+        font-size:15px; 
+        text-align:center;
+        border-style:solid;
+    }
+</style>
+
+</head>
+<body>
+    <h1> Air Cargo Service</h1>
+    <form  id="cargo" onsubmit="costcalculation(); return false;">
+    <table align="center">
+        <tr>
+            <td><label name="CustomerLogisticsAccountNumber">CustomerLogisticsAccount Number</label></td>
+            <td><input type="text" id="accnumber" name="accnumber" placeholder="Enter the Unique ID" pattern="[A-Za-z]{4}[_][0-9]{3}" required="true"></td>
+        </tr>
+        <tr>
+            <td><label name="Mobile">Mobile</label></td>
+            <td><input type="text" id="mobile" name="mobile" pattern="[789]\d{9}" required="true"></td>    
+        </tr>
+        <tr>
+            <td><label name="Email-ID">Email-ID</label></td>
+            <td><input type="text" id="emailid" name="emailid" required="true"></td>
+        </tr>
+        <tr>
+            <td><label name="ItemtobeShipped">Item to be Shipped</label></td>
+            <td><input type="text" id="item" name="item" pattern="[a-zA-Z ]*" placeholder="Item Name" required="true"></td>
+        </tr>
+        <tr>
+            <td> <label name="Item Category">Item Category</label></td>
+            <td><select id="category" name="itemtype" required="true"><option value="Electronics">Electronics</option>
+            <option value="Attires">Attires</option>
+            <option value="Toys">Toys</option>
+            <option value="Non Poisonous Food">Non Poisonous Food</option></select></td>
+        </tr>
+        <tr>
+            <td><label name="Shipment address"> Shipment Address</label></td>
+            <td><textarea id="address" name="address" required="true"></textarea></td>
+        </tr>
+        <tr>
+            <td><label name="Location">Location</label></td>
+            <td><select name="Location" id="Category" required="true">
+                <option value="London - 1800">London - 1800</option>
+                <option value="Singapore - 1400">Singapore - 1400</option>
+                <option value="New York - 3100">New York - 3100</option>
+                <option value="Mexico City - 3300">Mexico City - 3300</option>
+                <option value="Tokyo - 2800">Tokyo - 2800</option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><label name="Weight in kilograms"> Weight in kilograms</label></td>
+            <td><input type="number" min="5" max="36" id="kilogramval" name="weight" required="true"></td>
+        </tr>
+        <tr>
+            <td> <label name="Service Type"> Service Type</label></td>
+            <td><input type="radio" name="servicetype" id="type1" value="Normal" required="true">Normal
+            <input type="radio" name="servicetype" id="type2" value="Express" required="true">Express
+            <input type="radio" name="servicetype" id="type3" value="Platinum" required="true">Platinum
+            </td>
+        </tr>
+        <tr>
+           <td> <button type="submit" name="submit"> Book My Consignment</button></td>
+            <td> <button type="reset" name="clear">Clear</button></td>
+        </tr>
+        <tr>
+            <td><div id="result" text-align="center"></div></td>
+            </tr>
+        </table>
+  </form>  
+    <table id="costtable" border="1px">
+        <caption> Shipment Cost Chart</caption>
+        <tr>
+            <th>ServiceType</th>
+            <th>Weight(int kg)</th>
+            <th> Amount(per Kg)</th>
+        </tr>
+        <tr>
+            <td rowspan="3">Normal</td>
+            <td>5 to below 15</td>
+            <td>125</td>
+            </tr>
+            <tr>
+            <td>15 to 25</td>
+            <td>175</td>
+            </tr>
+            <tr>
+            <td>Above 25 to 36</td>
+            <td>200</td>
+            </tr>
+        <tr>
+            <td rowspan="3">Express</td>
+            <td>5 to below 15</td>
+            <td>175</td>
+            </tr>
+            <tr>
+                <td>15 to 25</td>
+                <td>225</td>
+            </tr>
+            <tr>
+                <td>Above 25 to 36</td>
+                <td>250</td>
+            </tr>
+            <tr>
+                <td rowspan="3">Platinum</td>
+                <td>5 to below 15</td>
+                <td>225</td>
+            </tr>
+            <tr>
+                <td>15 to 25</td>
+                <td>375</td>
+            </tr>
+            <tr>
+                <td>Above 25 to 36</td>
+                <td>400</td>
+            </tr>
+    </table>
+
+<script type="text/javascript">
+function costcalculation()
+{
+    var ans=0,rs=0;
+    var weight=document.getElementById('kilogramval').value;
+    var amount=0;
+   // console.log(weight);
+    if(document.getElementById('type1').checked)
+    {
+        if(weight>=5 && weight<=15)
+        {
+            ans=weight*125;
+        }
+        else if(weight>15 && weight<=25)
+        {
+            ans=weight*175;
+        }
+        else
+        ans=weight*200;
+    }
+    else if(document.getElementById('type2').checked)
+    {
+        if(weight>=5 && weight<=15)
+        {
+            ans=weight*175;
+        }
+        else if(weight>15 && weight<=25)
+        {
+            ans=weight*225;
+        }
+        else 
+        ans=weight*250;
+    }
+    else{
+        if(weight>=5 && weight<=15)
+         ans=weight*225;
+         else if(weight>15 && weight<=25)
+          ans=weight*375;
+         else
+          ans=weight*400;
+    }
+   //document.getElementById("result").innerHTML="ANS="+ans;
+    var locationselect=document.getElementById("Category");
+    var result=locationselect.options[locationselect.selectedIndex].text;
+     //document.getElementById("result1").innerHTML=result;
+    if(result=="London - 1800")
+    {
+        rs=Math.round((ans*0.1)+ans);
+       //document.getElementById("result").innerHTML=rs;
+    }
+    else if(result=="Singapore - 1400" || result=="Mexico City - 3300")
+    {
+       rs=ans;   
+    }
+    else if(result=="New York - 3100")
+    {
+        rs=Math.round((ans*0.15)+ans);
+    }
+    else{
+        rs=Math.round((ans*0.2)+ans);
+    }
+    document.getElementById("result").innerHTML="Your shipment has been accepted. Amount to be paid is Rs. "+rs;
+}
+</script>
+    
+</body>
+</html>
